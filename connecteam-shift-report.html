@@ -559,15 +559,13 @@
         const fromInput = document.getElementById('from')?.value;
         const toInput = document.getElementById('to')?.value;
         if (fromInput && toInput) {
-          const start = new Date(fromInput);
-          start.setDate(1); start.setHours(0,0,0,0);
-          const end = new Date(toInput);
-          end.setDate(1); end.setHours(0,0,0,0);
-          let cur = new Date(start);
-          while (cur <= end) {
-            const ym = cur.toISOString().slice(0, 7);
-            allMonths.add(ym);
-            cur.setMonth(cur.getMonth() + 1);
+          // Work on the YYYY-MM-DD strings directly: going through Date + toISOString()
+          // shifts months back by one in timezones ahead of UTC (e.g. Australia).
+          let [y, m] = fromInput.split('-').map(Number);
+          const [endY, endM] = toInput.split('-').map(Number);
+          while (y < endY || (y === endY && m <= endM)) {
+            allMonths.add(y + '-' + ('0' + m).slice(-2));
+            if (++m > 12) { m = 1; y++; }
           }
         }
       } catch (e) {
@@ -650,7 +648,7 @@
         sortedMonths.forEach(month => {
           const cellData = userMap[user][month];
           if (cellData) {
-            const monthDate = new Date(month + '-01');
+            const monthDate = new Date(month + '-01T00:00:00');
             const isPast = monthDate < currentDate;
             const isCurrentOrFuture = monthDate >= currentDate;
             
@@ -710,7 +708,7 @@
       
       // Month headers spanning 3 columns each
       sortedMonths.forEach(month => {
-        const monthDate = new Date(month + '-01');
+        const monthDate = new Date(month + '-01T00:00:00');
         const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
         const monthName = monthNames[monthDate.getMonth()] + ' ' + monthDate.getFullYear();
         
@@ -860,7 +858,7 @@
         const scheduled = (data.scheduledDetails || []).filter(r =>
           (r.user || '') === user && (!month || r.month === month)
         );
-        const prettyMonth = month ? new Date(month + '-01').toLocaleString('en-AU', { month: 'short', year: 'numeric' }) : 'All Months';
+        const prettyMonth = month ? new Date(month + '-01T00:00:00').toLocaleString('en-AU', { month: 'short', year: 'numeric' }) : 'All Months';
         titleEl.textContent = `Details for ${user} — ${prettyMonth}`;
         
         function renderWorkedRows(rows) {

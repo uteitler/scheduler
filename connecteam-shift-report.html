@@ -1,0 +1,1662 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>BK Bar Roster Dashboard - South Maroubra Surf Club</title>
+  
+  <!-- Materialize CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  
+  <style>
+    /* Custom styles inspired by South Maroubra Surf Club Theme */
+    :root {
+      --primary-color: #1e3a8a; /* PANTONE 7685 - Dark Blue */
+      --primary-color-light: #3b82f6;
+      --primary-color-dark: #1e40af;
+      --secondary-color: #0ea5e9; /* PANTONE 2985 - Light Blue */
+      --accent-color: #0284c7;
+      --background-gradient: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    }
+
+    /* Enhanced body styling with subtle gradient */
+    body {
+      background: var(--background-gradient);
+      min-height: 100vh;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      display: flex;
+      flex-direction: column;
+    }
+
+    main {
+      flex: 1 0 auto;
+    }
+
+    /* Header styling with club branding */
+    .club-header {
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+      color: white;
+      padding: 1.5rem 0;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .club-logo-text {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      padding: 12px 16px;
+      border-radius: 50%;
+      font-size: 1.1rem;
+      font-weight: bold;
+      margin-right: 1rem;
+      text-align: center;
+      min-width: 64px;
+      min-height: 64px;
+      line-height: 40px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .club-title {
+      margin: 0;
+      font-size: 2rem;
+      font-weight: 300;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .club-subtitle {
+      margin: 0.3rem 0 0 0;
+      font-size: 1.1rem;
+      opacity: 0.9;
+      font-weight: 300;
+    }
+
+    /* Enhanced container styling */
+    .main-container {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+      margin: 0 auto 1rem auto;
+      overflow: hidden;
+      max-width: 1600px;
+    }
+
+    .form-content {
+      padding: 1rem;
+    }
+
+    /* Section headers with club colors */
+    .section-header {
+      color: var(--primary-color);
+      border-bottom: 2px solid var(--secondary-color);
+      padding-bottom: 0.3rem;
+      margin-bottom: 0.8rem;
+      margin-top: 0.5rem;
+      background: linear-gradient(135deg, #e8f4f8 0%, #f0f9ff 100%);
+      padding: 0.6rem 1rem;
+      border-radius: 4px;
+      font-weight: 500;
+      font-size: 1.1rem;
+    }
+
+    /* Enhanced card panels */
+    .card-panel {
+      border-left: 4px solid var(--secondary-color);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      padding: 1rem;
+      margin: 1rem 0;
+      border-radius: 4px;
+    }
+
+    /* Control panel styling */
+    .control-panel {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      border-left: 4px solid var(--primary-color);
+    }
+
+    /* Button styling */
+    .btn, .btn-large, .btn-small {
+      background-color: var(--primary-color);
+      border-radius: 4px;
+      text-transform: none;
+      font-weight: 500;
+    }
+
+    .btn:hover, .btn:focus {
+      background-color: var(--primary-color-dark);
+    }
+
+    .btn.secondary {
+      background-color: var(--secondary-color) !important;
+    }
+
+    .btn.secondary:hover {
+      background-color: var(--accent-color) !important;
+    }
+
+    /* Input field styling */
+    input:not([type]):focus:not([readonly]),
+    input[type="text"]:not(.browser-default):focus:not([readonly]),
+    input[type="date"]:not(.browser-default):focus:not([readonly]),
+    input[type="number"]:not(.browser-default):focus:not([readonly]) {
+      border-bottom: 1px solid var(--primary-color);
+      box-shadow: 0 1px 0 0 var(--primary-color);
+    }
+
+    input:not([type]):focus:not([readonly]) + label,
+    input[type="text"]:not(.browser-default):focus:not([readonly]) + label,
+    input[type="date"]:not(.browser-default):focus:not([readonly]) + label,
+    input[type="number"]:not(.browser-default):focus:not([readonly]) + label {
+      color: var(--primary-color);
+    }
+
+    /* Table styling */
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin: 1rem 0;
+      background: white;
+      border-radius: 4px;
+      overflow: hidden;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    th {
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-color-dark) 100%);
+      color: white;
+      padding: 12px 16px;
+      text-align: left;
+      font-weight: 500;
+      font-size: 0.9rem;
+    }
+
+    td {
+      padding: 10px 16px;
+      border-bottom: 1px solid #e0e0e0;
+      font-size: 0.9rem;
+    }
+
+    tr:hover {
+      background-color: #f5f5f5;
+    }
+
+    /* Status colors */
+    .status-ok { color: #2e7d32; font-weight: 500; }
+    .status-warn { color: #f57c00; font-weight: 500; }
+    .status-error { color: #d32f2f; font-weight: 500; }
+
+    /* Message styling */
+    .message {
+      padding: 1rem;
+      border-radius: 4px;
+      margin: 1rem 0;
+      border-left: 4px solid;
+    }
+
+    .message.success {
+      background: #e8f5e8;
+      border-left-color: #4caf50;
+      color: #2e7d32;
+    }
+
+    .message.warning {
+      background: #fff3e0;
+      border-left-color: #ff9800;
+      color: #e65100;
+    }
+
+    .message.error {
+      background: #ffebee;
+      border-left-color: #f44336;
+      color: #c62828;
+    }
+
+    .message.info {
+      background: #e3f2fd;
+      border-left-color: #2196f3;
+      color: #1565c0;
+    }
+
+    /* Vertical layout - all sections stacked */
+    .dashboard-grid {
+      display: block;
+      margin-top: 0.8rem;
+    }
+
+    /* Responsive table wrapper - no fixed width */
+    .table-wrapper {
+      overflow-x: auto;
+      margin: 0.5rem 0;
+      border-radius: 4px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      width: 100%;
+    }
+
+    /* Compact spacing for data-dense tables */
+    .compact-table {
+      width: 100%;
+      table-layout: auto;
+      min-width: 100%;
+    }
+
+    .compact-table th,
+    .compact-table td {
+      padding: 4px 6px;
+      font-size: 0.8rem;
+      white-space: nowrap;
+    }
+
+    .compact-table th {
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 6px 8px;
+    }
+
+    /* Loading spinner */
+    .loading-spinner {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(30, 58, 138, 0.3);
+      border-radius: 50%;
+      border-top-color: var(--primary-color);
+      animation: spin 1s ease-in-out infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Detail panel styling */
+    .detail-panel {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      border: 1px solid #e0e0e0;
+      margin: 1rem 0;
+      overflow: hidden;
+    }
+
+    .detail-panel-header {
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-color-dark) 100%);
+      color: white;
+      padding: 1rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .detail-panel-content {
+      padding: 1.5rem;
+    }
+
+    /* Heatmap styling improvements */
+    .heatmap-cell {
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .heatmap-cell:hover {
+      transform: scale(1.05);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Container width */
+    .container {
+      width: 95%;
+      max-width: 1400px;
+    }
+
+    /* Role group headers */
+    .role-header {
+      color: var(--primary-color);
+      border-bottom: 2px solid var(--secondary-color);
+      padding: 0.5rem 0;
+      margin: 1.5rem 0 1rem 0;
+      font-size: 1.2rem;
+      font-weight: 500;
+      background: linear-gradient(135deg, #e8f4f8 0%, #f0f9ff 100%);
+      padding: 0.75rem 1rem;
+      border-radius: 4px;
+    }
+
+    /* Improved form controls */
+    .form-row {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-end;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .form-row .input-field {
+      flex: 1;
+      min-width: 200px;
+    }
+
+    /* Better spacing for sections */
+    .section {
+      margin-bottom: 2rem;
+    }
+
+    /* Icon improvements */
+    .material-icons.small { font-size: 1.2rem; }
+    .material-icons.tiny { font-size: 1rem; }
+
+    /* Utility classes */
+    .text-center { text-align: center; }
+    .text-right { text-align: right; }
+    .font-weight-bold { font-weight: 600; }
+    .font-size-small { font-size: 0.85rem; }
+    .margin-top { margin-top: 1rem; }
+    .margin-bottom { margin-bottom: 1rem; }
+  </style>
+
+  <script>
+    // Australian date formatting (dd/mm/yy)
+    function toAustralianDate(dateInput) {
+      if (!dateInput) return '';
+      const date = (dateInput instanceof Date) ? dateInput : new Date(dateInput);
+      if (isNaN(date.getTime())) return '';
+      const dd = ('0' + date.getDate()).slice(-2);
+      const mm = ('0' + (date.getMonth() + 1)).slice(-2);
+      const yy = ('' + date.getFullYear()).slice(-2);
+      return dd + '/' + mm + '/' + yy;
+    }
+    
+    function startOfMonth(date) { const d = new Date(date); d.setDate(1); d.setHours(0,0,0,0); return d; }
+    function endOfMonth(date) { const d = new Date(date); d.setMonth(d.getMonth()+1, 0); d.setHours(23,59,59,999); return d; }
+    function monthsOffsetFrom(date, offset) { const d = new Date(date); d.setMonth(d.getMonth()+offset); return d; }
+    function fmtDateLocal(d) { const dt = new Date(d); return dt.toLocaleString('en-AU', { timeZone: 'Australia/Sydney' }); }
+    function fmtDateInput(d) { const z = new Date(d); return z.toISOString().slice(0,10); }
+    
+    // Get current date for filtering past shifts
+    function getCurrentDate() {
+      const now = new Date();
+      now.setHours(0, 0, 0, 0); // Start of today
+      return now;
+    }
+    
+    // Get current date/time for filtering past shifts (more precise)
+    function getCurrentDateTime() {
+      // Get current time in Sydney timezone (GMT+10)
+      const now = new Date();
+      console.log('getCurrentDateTime: Browser time = ' + now.toISOString() + ', Sydney time = ' + now.toLocaleString('en-AU', { timeZone: 'Australia/Sydney' }));
+      return now;
+    }
+
+    function defaultRange() {
+      const today = new Date();
+      const from = new Date(today);
+      from.setDate(today.getDate() - 45); // 45 days back
+      from.setHours(0, 0, 0, 0); // Start of day
+      const to = new Date(today);
+      to.setDate(today.getDate() + 45); // 45 days forward
+      to.setHours(23, 59, 59, 999); // End of day
+      return { from, to };
+    }
+
+    function setDefaultRange() {
+      const { from, to } = defaultRange();
+      document.getElementById('from').value = fmtDateInput(from);
+      document.getElementById('to').value = fmtDateInput(to);
+    }
+
+    function getRange() {
+      const fromStr = document.getElementById('from').value;
+      const toStr = document.getElementById('to').value;
+      if (!fromStr || !toStr) return null;
+      console.log('Frontend getRange: fromStr = "' + fromStr + '", toStr = "' + toStr + '"');
+      const from = new Date(fromStr);
+      const to = new Date(toStr + 'T23:59:59');
+      console.log('Frontend getRange: parsed from = "' + from.toISOString() + '", to = "' + to.toISOString() + '"');
+      return { from: from.toISOString(), to: to.toISOString() };
+    }
+
+    function showMessage(msg, cls) {
+      const el = document.getElementById('msg');
+      // Use innerHTML to support HTML content (e.g., line breaks, bold text)
+      el.innerHTML = msg || '';
+
+      // Clear existing classes
+      el.className = 'message';
+
+      // Map old classes to new styling
+      if (cls === 'ok' || cls === 'success') {
+        el.classList.add('success');
+      } else if (cls === 'warn' || cls === 'warning') {
+        el.classList.add('warning');
+      } else if (cls === 'error') {
+        el.classList.add('error');
+      } else if (cls === 'small' || cls === 'info') {
+        el.classList.add('info');
+      }
+    }
+
+    function loadDashboard() {
+      console.log('loadDashboard called');
+      const r = getRange();
+      if (!r) {
+        console.warn('loadDashboard: No valid range, showing warning');
+        showMessage('Please select a valid date range', 'warning');
+        return;
+      }
+      
+      // Calculate date range for progress estimation
+      const fromDate = new Date(r.from);
+      const toDate = new Date(r.to);
+      const totalDays = Math.ceil((toDate - fromDate) / (1000 * 60 * 60 * 24));
+      const estimatedChunks = Math.ceil(totalDays / 30); // 30-day chunks
+      
+      console.log('loadDashboard: Calling getRosterDashboard with ' + JSON.stringify(r) + ' (' + totalDays + ' days, ~' + estimatedChunks + ' chunks)');
+      
+      // Get the Load Dashboard button and disable it with processing text
+      const loadButton = document.querySelector('button[onclick="loadDashboard()"]');
+      const originalButtonText = loadButton ? loadButton.innerHTML : '';
+      
+      if (loadButton) {
+        loadButton.disabled = true;
+        loadButton.classList.add('disabled');
+        loadButton.innerHTML = '<i class="material-icons left">hourglass_empty</i>Processing...';
+      }
+      
+      // Enhanced progress messaging with more detail
+      showMessage('Loading ' + totalDays + ' days of data (' + estimatedChunks + ' API chunks). This may take 20-60 seconds...', 'info');
+      
+      // Start timer for performance tracking
+      const startTime = Date.now();
+      
+      // Add a progress indicator that updates every few seconds
+      let progressDots = 0;
+      const progressInterval = setInterval(() => {
+        progressDots = (progressDots + 1) % 4;
+        const dots = '.'.repeat(progressDots + 1);
+        const elapsed = Math.floor((Date.now() - startTime) / 1000);
+        showMessage(`Loading ${totalDays} days of data (${elapsed}s elapsed)${dots} Please wait, processing ${estimatedChunks} API chunks...`, 'info');
+        
+        // Update button text with elapsed time
+        if (loadButton) {
+          loadButton.innerHTML = `<i class="material-icons left">hourglass_empty</i>Processing... ${elapsed}s`;
+        }
+      }, 2000);
+      
+      google.script.run
+        .withSuccessHandler(function(data) {
+          clearInterval(progressInterval); // Stop the progress indicator
+          const loadTime = ((Date.now() - startTime) / 1000).toFixed(2);
+          console.log('loadDashboard success in ' + loadTime + 's: received data keys=' + Object.keys(data || {}));
+          console.log('Data structure: summary=' + (data.summary ? data.summary.length : 0) + ', workedDetails=' + (data.workedDetails ? data.workedDetails.length : 0) + ', scheduledDetails=' + (data.scheduledDetails ? data.scheduledDetails.length : 0) + ', openShifts=' + (data.openShifts ? data.openShifts.length : 0));
+          if (data.summary) console.log('Sample summary:', data.summary.slice(0, 3));
+          if (data.scheduledDetails) console.log('Sample scheduled:', data.scheduledDetails.slice(0, 3));
+          
+          // Restore button state
+          if (loadButton) {
+            loadButton.disabled = false;
+            loadButton.classList.remove('disabled');
+            loadButton.innerHTML = originalButtonText;
+          }
+          
+          showMessage('✅ Data loaded in ' + loadTime + 's - Processing ' + (data.summary?.length || 0) + ' summaries...', 'success');
+          renderDashboard(data);
+        })
+        .withFailureHandler(function(e) {
+          clearInterval(progressInterval); // Stop the progress indicator
+          const loadTime = ((Date.now() - startTime) / 1000).toFixed(2);
+          console.error('loadDashboard failure after ' + loadTime + 's:', e);
+          console.error('Error details:', e.stack || e.message);
+          
+          // Restore button state
+          if (loadButton) {
+            loadButton.disabled = false;
+            loadButton.classList.remove('disabled');
+            loadButton.innerHTML = originalButtonText;
+          }
+          
+          showMessage('❌ Error after ' + loadTime + 's loading Schedule API: ' + (e.message || e.toString()) + '. Check browser console and Google Apps Script execution logs.', 'error');
+        })
+        .getRosterDashboard(r.from, r.to);
+    }
+
+    function renderDashboard(data) {
+      console.log('renderDashboard called with data:', data);
+      if (!data) {
+        console.error('renderDashboard: No data received');
+        showMessage('No data loaded', 'error');
+        return;
+      }
+      showMessage('Data loaded: ' + (data.summary?.length || 0) + ' summaries', 'success');
+      window.dashboardData = data; // store globally for dynamic detail panel
+      renderSummary(data.summary || []);
+      renderOpenShifts(data.openShifts || []);
+    }
+
+    function renderSummary(rows) {
+      console.log('renderSummary: Creating role-based heatmap tables from ' + rows.length + ' summary data points');
+      const tableContainer = document.querySelector('#summary');
+      if (!tableContainer) {
+        console.error('renderSummary: #summary container not found');
+        return;
+      }
+      
+      // Clear existing content
+      tableContainer.innerHTML = '';
+      
+      if (!rows.length) {
+        tableContainer.innerHTML = '<div class="message info text-center">No summary data available</div>';
+        return;
+      }
+      
+      // Transform data into pivot structure: users as rows, months as columns
+      const userMap = {};
+      const allMonths = new Set();
+      // Ensure month columns cover the entire selected date range, even if a month has no data
+      try {
+        const fromInput = document.getElementById('from')?.value;
+        const toInput = document.getElementById('to')?.value;
+        if (fromInput && toInput) {
+          const start = new Date(fromInput);
+          start.setDate(1); start.setHours(0,0,0,0);
+          const end = new Date(toInput);
+          end.setDate(1); end.setHours(0,0,0,0);
+          let cur = new Date(start);
+          while (cur <= end) {
+            const ym = cur.toISOString().slice(0, 7);
+            allMonths.add(ym);
+            cur.setMonth(cur.getMonth() + 1);
+          }
+        }
+      } catch (e) {
+        console.warn('renderSummary: failed to prefill months from date inputs:', e);
+      }
+      
+      rows.forEach(row => {
+        const user = row.user || 'Unknown User';
+        const month = row.month; // Format: "2025-09"
+        const workedHours = parseFloat(row.workedHours || 0);
+        const scheduledHours = parseFloat(row.scheduledHours || 0);
+        const scheduledCount = parseInt(row.scheduledCount || 0);
+        const workedCount = parseInt(row.workedCount || 0);
+        const totalShifts = parseInt(row.totalShifts || (workedCount + scheduledCount));
+        
+        allMonths.add(month);
+        if (!userMap[user]) {
+          userMap[user] = {};
+        }
+        userMap[user][month] = { workedHours, scheduledHours, scheduledCount, workedCount, totalShifts };
+      });
+      
+      const sortedMonths = Array.from(allMonths).sort(); // Chronological order
+      
+      // Group users by role using actual role data from backend
+      const roleGroups = {
+        'Bar Staff': [],
+        'Glassy': [],
+        'Other': []
+      };
+      
+      // Create a map of user names to their roles from the summary data
+      const userRoles = {};
+      rows.forEach(row => {
+        if (row.user && row.role) {
+          userRoles[row.user] = row.role;
+        }
+      });
+      
+      Object.keys(userMap).forEach(user => {
+        const userRole = userRoles[user] || 'Unknown';
+        const roleLower = userRole.toLowerCase();
+        
+        if (roleLower.includes('bar') || roleLower.includes('staff')) {
+          roleGroups['Bar Staff'].push(user);
+        } else if (roleLower.includes('glass') || roleLower.includes('glassy')) {
+          roleGroups['Glassy'].push(user);
+        } else {
+          roleGroups['Other'].push(user);
+        }
+      });
+      
+      // Create separate tables for each role group
+      Object.keys(roleGroups).forEach(roleGroup => {
+        const usersInRole = roleGroups[roleGroup];
+        if (usersInRole.length === 0) return; // Skip empty groups
+        
+        createRoleTable(roleGroup, usersInRole, userMap, sortedMonths, tableContainer);
+      });
+    }
+    
+    function createRoleTable(roleGroup, usersInRole, userMap, sortedMonths, container) {
+      console.log('Creating table for role: ' + roleGroup + ' with ' + usersInRole.length + ' users');
+      
+      // Add role group header
+      const roleHeader = document.createElement('h3');
+      roleHeader.className = 'role-header';
+      roleHeader.innerHTML = `<i class="material-icons small" style="vertical-align: middle; margin-right: 8px;">group</i>${roleGroup} (${usersInRole.length} users)`;
+      container.appendChild(roleHeader);
+      
+      // Calculate user totals for heatmap coloring (only for users in this role group)
+      const userTotals = {};
+      const currentDate = new Date();
+      currentDate.setDate(1); // First day of current month for comparison
+      
+      usersInRole.forEach(user => {
+        let totalHours = 0;
+        let debugInfo = [];
+        
+        sortedMonths.forEach(month => {
+          const cellData = userMap[user][month];
+          if (cellData) {
+            const monthDate = new Date(month + '-01');
+            const isPast = monthDate < currentDate;
+            const isCurrentOrFuture = monthDate >= currentDate;
+            
+            // Always count worked hours (historical data)
+            if (cellData.workedHours > 0) {
+              totalHours += cellData.workedHours;
+              debugInfo.push(`${month} worked: +${cellData.workedHours.toFixed(1)}`);
+            }
+            
+            // ALWAYS count scheduled hours (they represent confirmed future work)
+            if (cellData.scheduledHours > 0) {
+              totalHours += cellData.scheduledHours;
+              debugInfo.push(`${month} scheduled: +${cellData.scheduledHours.toFixed(1)}`);
+            }
+          }
+        });
+        
+        userTotals[user] = totalHours;
+      });
+      
+      // Sort users in this role group by total hours in descending order (highest first)
+      const sortedUsers = usersInRole.sort((a, b) => {
+        return userTotals[b] - userTotals[a];
+      });
+      
+      // Find min/max for heatmap scaling within this role group only
+      const roleGroupTotals = usersInRole.map(user => userTotals[user] || 0);
+      const minTotal = roleGroupTotals.length > 0 ? Math.min(...roleGroupTotals) : 0;
+      const maxTotal = roleGroupTotals.length > 0 ? Math.max(...roleGroupTotals) : 0;
+      
+      // Handle edge case where all users have 0 hours
+      const effectiveMin = minTotal;
+      const effectiveMax = maxTotal > minTotal ? maxTotal : minTotal + 1; // Ensure max > min for gradient calculation
+      
+      console.log('Heatmap data: ' + sortedUsers.length + ' users, ' + sortedMonths.length + ' months, total range: ' + minTotal.toFixed(1) + ' - ' + maxTotal.toFixed(1) + ' hours');
+      
+      // Create table wrapper
+      const tableWrapper = document.createElement('div');
+      tableWrapper.className = 'table-wrapper';
+      
+      // Create table structure
+      const newTable = document.createElement('table');
+      newTable.className = 'compact-table';
+      
+      // Create header row with sub-headers
+      const thead = document.createElement('thead');
+      
+      // Main header row
+      const headerRow1 = document.createElement('tr');
+      
+      // Empty corner cell spanning 2 rows
+      const cornerCell = document.createElement('th');
+      cornerCell.textContent = 'User';
+      cornerCell.rowSpan = 2;
+      cornerCell.style.textAlign = 'center';
+      headerRow1.appendChild(cornerCell);
+      
+      // Month headers spanning 3 columns each
+      sortedMonths.forEach(month => {
+        const monthDate = new Date(month + '-01');
+        const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        const monthName = monthNames[monthDate.getMonth()] + ' ' + monthDate.getFullYear();
+        
+        const th = document.createElement('th');
+        th.textContent = monthName;
+        th.style.textAlign = 'center';
+        th.colSpan = 3; // Spans 3 sub-columns
+        th.title = month; // Full ISO for reference
+        headerRow1.appendChild(th);
+      });
+      
+      // Total column header
+      const totalHeader = document.createElement('th');
+      totalHeader.innerHTML = '<i class="material-icons tiny">schedule</i> Total Hours';
+      totalHeader.style.textAlign = 'center';
+      totalHeader.rowSpan = 2;
+      headerRow1.appendChild(totalHeader);
+      
+      thead.appendChild(headerRow1);
+      
+      // Sub-header row
+      const headerRow2 = document.createElement('tr');
+      
+      sortedMonths.forEach(month => {
+        // Worked hours sub-header
+        const workedTh = document.createElement('th');
+        workedTh.textContent = 'Worked';
+        workedTh.style.textAlign = 'center';
+        headerRow2.appendChild(workedTh);
+        
+        // Scheduled hours sub-header
+        const scheduledTh = document.createElement('th');
+        scheduledTh.textContent = 'Scheduled';
+        scheduledTh.style.textAlign = 'center';
+        headerRow2.appendChild(scheduledTh);
+        
+        // Shifts count sub-header
+        const shiftsTh = document.createElement('th');
+        shiftsTh.textContent = 'Shifts';
+        shiftsTh.style.textAlign = 'center';
+        headerRow2.appendChild(shiftsTh);
+      });
+      
+      thead.appendChild(headerRow2);
+      newTable.appendChild(thead);
+      
+      // Helper function to get heatmap color (Dark Red = highest, White = lowest)
+      function getHeatmapColor(total, min, max) {
+        if (total === 0) return '#ffffff'; // White for no data
+        if (max === min) return '#ffcccc'; // Light pink if all same value
+        
+        // Normalize to 0-1 range
+        const normalized = (total - min) / (max - min);
+        
+        // Dark red to white gradient (dark red for high values, white for low values)
+        // Start with dark red (139, 0, 0) and fade to white (255, 255, 255)
+        const red = Math.round(139 + (255 - 139) * (1 - normalized));
+        const green = Math.round(0 + 255 * (1 - normalized));
+        const blue = Math.round(0 + 255 * (1 - normalized));
+        
+        return `rgb(${red}, ${green}, ${blue})`;
+      }
+      
+      // Create data rows for each user
+      const tbody = document.createElement('tbody');
+      
+      sortedUsers.forEach(user => {
+        const userRow = document.createElement('tr');
+        const userTotal = userTotals[user];
+        
+        // User name cell (row header) with heatmap background
+        const userCell = document.createElement('td');
+        userCell.textContent = user;
+        userCell.className = 'heatmap-cell font-weight-bold';
+        userCell.style.backgroundColor = getHeatmapColor(userTotal, effectiveMin, effectiveMax);
+        userCell.style.color = userTotal > (effectiveMin + effectiveMax) / 2 ? 'white' : 'black';
+        userCell.title = `Total: ${userTotal.toFixed(1)} hours`;
+        userCell.style.cursor = 'pointer';
+        userCell.addEventListener('click', function() { showDetailsFor(user); });
+        userRow.appendChild(userCell);
+        
+        // Data cells for each month (3 sub-columns each)
+        sortedMonths.forEach(month => {
+          const cellData = userMap[user][month];
+          
+          // Worked hours cell
+          const workedTd = document.createElement('td');
+          const workedHours = cellData ? cellData.workedHours.toFixed(1) : '—';
+          workedTd.textContent = workedHours;
+          workedTd.style.textAlign = 'center';
+          workedTd.style.backgroundColor = cellData && cellData.workedHours > 0 ? '#e8f5e8' : '#f8f9fa';
+          userRow.appendChild(workedTd);
+          
+          // Scheduled hours cell
+          const scheduledTd = document.createElement('td');
+          const scheduledHours = cellData ? cellData.scheduledHours.toFixed(1) : '—';
+          scheduledTd.textContent = scheduledHours;
+          scheduledTd.style.textAlign = 'center';
+          scheduledTd.style.backgroundColor = cellData && cellData.scheduledHours > 0 ? '#fff3cd' : '#f8f9fa';
+          userRow.appendChild(scheduledTd);
+          
+          // Shifts count cell
+          const shiftsTd = document.createElement('td');
+          const shiftsCount = cellData ? cellData.totalShifts : '—';
+          shiftsTd.textContent = shiftsCount;
+          shiftsTd.style.textAlign = 'center';
+          shiftsTd.style.backgroundColor = cellData && cellData.totalShifts > 0 ? '#e1ecf4' : '#f8f9fa';
+          if (cellData) {
+            shiftsTd.title = `Shifts: ${cellData.totalShifts} (Worked: ${cellData.workedCount || 0}, Scheduled: ${cellData.scheduledCount || 0})`;
+            shiftsTd.style.cursor = 'pointer';
+            shiftsTd.addEventListener('click', function() { showDetailsFor(user, month); });
+          }
+          userRow.appendChild(shiftsTd);
+        });
+        
+        // Total hours cell
+        const totalTd = document.createElement('td');
+        totalTd.textContent = userTotal.toFixed(1);
+        totalTd.className = 'font-weight-bold';
+        totalTd.style.textAlign = 'center';
+        totalTd.style.backgroundColor = getHeatmapColor(userTotal, effectiveMin, effectiveMax);
+        totalTd.style.color = userTotal > (effectiveMin + effectiveMax) / 2 ? 'white' : 'black';
+        totalTd.style.border = '2px solid var(--primary-color)';
+        userRow.appendChild(totalTd);
+        
+        tbody.appendChild(userRow);
+      });
+      
+      newTable.appendChild(tbody);
+      tableWrapper.appendChild(newTable);
+      container.appendChild(tableWrapper);
+      
+      console.log('Heatmap summary table created: ' + sortedUsers.length + ' user rows × ' + (sortedMonths.length * 3 + 1) + ' data columns');
+    }
+
+    // Dynamic detail panel
+    function showDetailsFor(user, month) {
+      try {
+        const panel = document.getElementById('detailPanel');
+        const titleEl = document.getElementById('detailTitle');
+        const contentEl = document.getElementById('detailContent');
+        if (!panel || !titleEl || !contentEl) return;
+        const data = window.dashboardData || {};
+        const worked = (data.workedDetails || []).filter(r =>
+          (r.user || '') === user && (!month || r.month === month)
+        );
+        const scheduled = (data.scheduledDetails || []).filter(r =>
+          (r.user || '') === user && (!month || r.month === month)
+        );
+        const prettyMonth = month ? new Date(month + '-01').toLocaleString('en-AU', { month: 'short', year: 'numeric' }) : 'All Months';
+        titleEl.textContent = `Details for ${user} — ${prettyMonth}`;
+        
+        function renderWorkedRows(rows) {
+          if (!rows.length) return '<div class="font-size-small">No worked records</div>';
+          const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+          const trs = rows
+            .slice()
+            .sort((a,b) => new Date(a.start) - new Date(b.start))
+            .map(r => {
+              const s = new Date(r.start), e = new Date(r.end);
+              const dow = days[s.getDay()];
+              const dateStr = `${dow} ${s.getDate()}-${s.getMonth()+1}-${(s.getFullYear()+'').slice(-2)} (${s.toLocaleTimeString('en-AU',{hour:'2-digit',minute:'2-digit'})} - ${e.toLocaleTimeString('en-AU',{hour:'2-digit',minute:'2-digit'})})`;
+              return `<tr><td>${r.job || 'Unknown Job'}</td><td>${dateStr}</td><td class="text-right">${parseFloat(r.hours || 0).toFixed(2)} hrs</td></tr>`;
+            })
+            .join('');
+          return `<div class="table-wrapper"><table class="compact-table">
+            <thead><tr><th>Job</th><th>Date (HH:MM - HH:MM)</th><th class="text-right">Hours</th></tr></thead>
+            <tbody>${trs}</tbody>
+          </table></div>`;
+        }
+        function renderScheduledRows(rows) {
+          if (!rows.length) return '<div class="font-size-small">No scheduled records</div>';
+          const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+          const trs = rows
+            .slice()
+            .sort((a,b) => new Date(a.start) - new Date(b.start))
+            .map(r => {
+              const s = new Date(r.start), e = new Date(r.end);
+              const dow = days[s.getDay()];
+              const dateStr = `${dow} ${s.getDate()}-${s.getMonth()+1}-${(s.getFullYear()+'').slice(-2)} (${s.toLocaleTimeString('en-AU',{hour:'2-digit',minute:'2-digit'})} - ${e.toLocaleTimeString('en-AU',{hour:'2-digit',minute:'2-digit'})})`;
+              return `<tr><td>${r.job || 'Unknown Job'}</td><td>${r.title || r.job || 'Unspecified'}</td><td>${dateStr}</td></tr>`;
+            })
+            .join('');
+          return `<div class="table-wrapper"><table class="compact-table">
+            <thead><tr><th>Job</th><th>Title</th><th>Date (HH:MM - HH:MM)</th></tr></thead>
+            <tbody>${trs}</tbody>
+          </table></div>`;
+        }
+        
+        contentEl.innerHTML = `
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+            <div>
+              <h4 style="margin:6px 0; font-size: 1rem;">Worked</h4>
+              ${renderWorkedRows(worked)}
+            </div>
+            <div>
+              <h4 style="margin:6px 0; font-size: 1rem;">Scheduled</h4>
+              ${renderScheduledRows(scheduled)}
+            </div>
+          </div>
+        `;
+        panel.style.display = 'block';
+        panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      } catch (e) {
+        console.error('showDetailsFor error:', e);
+      }
+    }
+    
+    function hideDetails() {
+      const panel = document.getElementById('detailPanel');
+      const contentEl = document.getElementById('detailContent');
+      if (panel) panel.style.display = 'none';
+      if (contentEl) contentEl.innerHTML = '';
+    }
+
+    function jumpToOpenShifts() {
+      const openShiftsSection = document.querySelector('#open').closest('.section');
+      if (openShiftsSection) {
+        openShiftsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+
+    function renderOpenShifts(rows) {
+      console.log('renderOpenShifts: Processing ' + rows.length + ' open shifts from backend');
+      
+      // Filter to only show future open shifts (past shifts are considered allocated)
+      const currentDate = getCurrentDate();
+      const futureOpenShifts = rows.filter(r => {
+        const startDate = new Date(r.startTime);
+        const isFuture = startDate >= currentDate;
+        if (!isFuture && r.id) {
+          console.log('Excluding past shift ID ' + r.id + ' starting ' + toAustralianDate(startDate) + ' - considered allocated');
+        }
+        return isFuture;
+      });
+      
+      console.log('renderOpenShifts: After future-only filter, displaying ' + futureOpenShifts.length + ' shifts');
+      
+      const tbody = document.querySelector('#open tbody');
+      if (!tbody) {
+        console.error('renderOpenShifts: #open tbody element not found');
+        return;
+      }
+      
+      tbody.innerHTML = '';
+      
+      if (futureOpenShifts.length === 0) {
+        const tr = document.createElement('tr');
+        tr.innerHTML = '<td colspan="3" class="text-center font-size-small">No future open shifts available</td>';
+        tbody.appendChild(tr);
+        return;
+      }
+      
+      // Sort by start time (chronological order)
+      futureOpenShifts.sort((a, b) => new Date(a.startTime) - new Date(b.startTime));
+      
+      futureOpenShifts.forEach(r => {
+        console.log('Rendering future open shift:', { id: r.id, job: r.jobName, start: r.startTime, end: r.endTime });
+        
+        const startDate = new Date(r.startTime);
+        const endDate = new Date(r.endTime);
+        
+        const tr = document.createElement('tr');
+        // Keep shift ID as a data attribute (no visible column)
+        tr.setAttribute('data-shift-id', r.id || '');
+        // Build combined date/time string like other sections
+        const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+        const dayOfWeek = days[startDate.getDay()];
+        const dayOfMonth = startDate.getDate();
+        const month = startDate.getMonth() + 1;
+        const year = startDate.getFullYear();
+        const start = startDate.toLocaleTimeString('en-AU', { hour: '2-digit', minute: '2-digit' });
+        const end = endDate.toLocaleTimeString('en-AU', { hour: '2-digit', minute: '2-digit' });
+        const dateStr = `${dayOfWeek} ${dayOfMonth}-${month}-${year.toString().slice(-2)} (${start} - ${end})`;
+        const title = (r.title && r.title.trim()) ? r.title : (r.jobName || 'Unspecified');
+
+        tr.innerHTML = `
+          <td>${dateStr}</td>
+          <td>${title}</td>
+          <td>${r.type || 'General'}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+      
+      console.log('renderOpenShifts complete: ' + tbody.children.length + ' future open shifts rendered');
+    }
+
+    function recommend() {
+      console.log('recommend called');
+      const r = getRange();
+      if (!r) {
+        console.warn('recommend: No valid range');
+        showMessage('Please select a date range for recommendations', 'warning');
+        return;
+      }
+      
+      // Get the Recommend button and disable it with processing text
+      const recommendButton = document.querySelector('button[onclick="recommend()"]');
+      const originalButtonText = recommendButton ? recommendButton.innerHTML : '';
+      
+      if (recommendButton) {
+        recommendButton.disabled = true;
+        recommendButton.classList.add('disabled');
+        recommendButton.innerHTML = '<i class="material-icons left">hourglass_empty</i>Processing...';
+      }
+      
+      // Get excluded user IDs from checkboxes
+      const excludedUserIds = getExcludedUserIds();
+
+      console.log('recommend: Calling recommendForOpenShifts with ' + JSON.stringify(r) + ', excluded users: ' + JSON.stringify(excludedUserIds));
+      showMessage('Computing recommendations for open shifts (Fairness Priority)...', 'info');
+
+      // Start timer for progress tracking
+      const startTime = Date.now();
+      
+      // Add a progress indicator that updates every few seconds
+      let progressDots = 0;
+      const progressInterval = setInterval(() => {
+        progressDots = (progressDots + 1) % 4;
+        const dots = '.'.repeat(progressDots + 1);
+        const elapsed = Math.floor((Date.now() - startTime) / 1000);
+        showMessage(`Computing recommendations${dots} (${elapsed}s elapsed)`, 'info');
+        
+        // Update button text with elapsed time
+        if (recommendButton) {
+          recommendButton.innerHTML = `<i class="material-icons left">hourglass_empty</i>Processing... ${elapsed}s`;
+        }
+      }, 2000);
+      
+      google.script.run
+        .withSuccessHandler(function(res) {
+          clearInterval(progressInterval); // Stop the progress indicator
+          const loadTime = ((Date.now() - startTime) / 1000).toFixed(2);
+          console.log('recommend success in ' + loadTime + 's:', res);
+          if (res.assignments) console.log('Recommendations: ' + res.assignments.length + ' assignments');
+          
+          // Restore button state
+          if (recommendButton) {
+            recommendButton.disabled = false;
+            recommendButton.classList.remove('disabled');
+            recommendButton.innerHTML = originalButtonText;
+          }
+          
+          showMessage('✅ Recommendations ready in ' + loadTime + 's (' + (res.assignments ? res.assignments.length : 0) + ' suggestions)', 'success');
+          renderRecommendations(res.assignments || []);
+          document.querySelector('#recs').style.display = 'table';
+          // Show the assign button container if there are recommendations
+          if (res.assignments && res.assignments.length > 0) {
+            document.getElementById('assignButtonContainer').style.display = 'flex';
+          }
+        })
+        .withFailureHandler(function(e) {
+          clearInterval(progressInterval); // Stop the progress indicator
+          const loadTime = ((Date.now() - startTime) / 1000).toFixed(2);
+          console.error('recommend failure after ' + loadTime + 's:', e);
+          
+          // Restore button state
+          if (recommendButton) {
+            recommendButton.disabled = false;
+            recommendButton.classList.remove('disabled');
+            recommendButton.innerHTML = originalButtonText;
+          }
+          
+          showMessage('❌ Error after ' + loadTime + 's computing recommendations: ' + (e.message || e.toString()), 'error');
+        })
+        .recommendForOpenShifts(r.from, r.to, excludedUserIds);
+    }
+
+    function recommendClaimsPriority() {
+      console.log('recommendClaimsPriority called');
+      const r = getRange();
+      if (!r) {
+        console.warn('recommendClaimsPriority: No valid range');
+        showMessage('Please select a date range for recommendations', 'warning');
+        return;
+      }
+
+      // Get excluded user IDs from checkboxes
+      const excludedUserIds = getExcludedUserIds();
+
+      // Get the Recommend button and disable it with processing text
+      const recommendButton = document.querySelector('button[onclick="recommendClaimsPriority()"]');
+      const originalButtonText = recommendButton ? recommendButton.innerHTML : '';
+
+      if (recommendButton) {
+        recommendButton.disabled = true;
+        recommendButton.classList.add('disabled');
+        recommendButton.innerHTML = '<i class="material-icons left">hourglass_empty</i>Processing...';
+      }
+
+      console.log('recommendClaimsPriority: Calling recommendForOpenShiftsClaimsPriority with ' + JSON.stringify(r) + ', excluded users: ' + JSON.stringify(excludedUserIds));
+      showMessage('Computing recommendations for open shifts (Claims Priority)...', 'info');
+
+      // Start timer for progress tracking
+      const startTime = Date.now();
+
+      // Add a progress indicator that updates every few seconds
+      let progressDots = 0;
+      const progressInterval = setInterval(() => {
+        progressDots = (progressDots + 1) % 4;
+        const dots = '.'.repeat(progressDots + 1);
+        const elapsed = Math.floor((Date.now() - startTime) / 1000);
+        showMessage(`Computing recommendations (Claims Priority)${dots} (${elapsed}s elapsed)`, 'info');
+
+        // Update button text with elapsed time
+        if (recommendButton) {
+          recommendButton.innerHTML = `<i class="material-icons left">hourglass_empty</i>Processing... ${elapsed}s`;
+        }
+      }, 2000);
+
+      google.script.run
+        .withSuccessHandler(function(res) {
+          clearInterval(progressInterval); // Stop the progress indicator
+          const loadTime = ((Date.now() - startTime) / 1000).toFixed(2);
+          console.log('recommendClaimsPriority success in ' + loadTime + 's:', res);
+          if (res.assignments) console.log('Recommendations: ' + res.assignments.length + ' assignments');
+
+          // Restore button state
+          if (recommendButton) {
+            recommendButton.disabled = false;
+            recommendButton.classList.remove('disabled');
+            recommendButton.innerHTML = originalButtonText;
+          }
+
+          showMessage('✅ Recommendations ready (Claims Priority) in ' + loadTime + 's (' + (res.assignments ? res.assignments.length : 0) + ' suggestions)', 'success');
+          renderRecommendations(res.assignments || []);
+          document.querySelector('#recs').style.display = 'table';
+          // Show the assign button container if there are recommendations
+          if (res.assignments && res.assignments.length > 0) {
+            document.getElementById('assignButtonContainer').style.display = 'flex';
+          }
+        })
+        .withFailureHandler(function(e) {
+          clearInterval(progressInterval); // Stop the progress indicator
+          const loadTime = ((Date.now() - startTime) / 1000).toFixed(2);
+          console.error('recommendClaimsPriority failure after ' + loadTime + 's:', e);
+
+          // Restore button state
+          if (recommendButton) {
+            recommendButton.disabled = false;
+            recommendButton.classList.remove('disabled');
+            recommendButton.innerHTML = originalButtonText;
+          }
+
+          showMessage('❌ Error after ' + loadTime + 's computing recommendations: ' + (e.message || e.toString()), 'error');
+        })
+        .recommendForOpenShiftsClaimsPriority(r.from, r.to, excludedUserIds);
+    }
+
+    function getExcludedUserIds() {
+      const checkboxes = document.querySelectorAll('input[name="excludeUser"]:checked');
+      const excluded = [];
+      checkboxes.forEach(function(checkbox) {
+        excluded.push(checkbox.value);
+      });
+      console.log('getExcludedUserIds: Found ' + excluded.length + ' excluded users:', excluded);
+      return excluded;
+    }
+
+    function loadStaffExclusionList() {
+      console.log('loadStaffExclusionList: Fetching staff list from backend');
+      const container = document.getElementById('staffExclusionList');
+      if (!container) {
+        console.error('loadStaffExclusionList: Container not found');
+        return;
+      }
+
+      container.innerHTML = '<p class="font-size-small" style="color: #666;"><i class="material-icons tiny" style="vertical-align: middle;">hourglass_empty</i> Loading staff list...</p>';
+
+      google.script.run
+        .withSuccessHandler(function(users) {
+          console.log('loadStaffExclusionList: Received ' + users.length + ' users');
+
+          if (!users || users.length === 0) {
+            container.innerHTML = '<p class="font-size-small" style="color: #999;">No staff members found</p>';
+            return;
+          }
+
+          // Sort alphabetically by name
+          users.sort(function(a, b) {
+            return (a.name || '').localeCompare(b.name || '');
+          });
+
+          // Create checkboxes in a grid layout
+          let html = '<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 0.5rem;">';
+
+          users.forEach(function(user) {
+            html += '<label style="display: flex; align-items: center; cursor: pointer; padding: 0.25rem;">';
+            html += '<input type="checkbox" name="excludeUser" value="' + user.id + '" style="margin-right: 0.5rem;" />';
+            html += '<span class="font-size-small">' + user.name + ' <span style="color: #666;">(' + (user.role || 'No role') + ')</span></span>';
+            html += '</label>';
+          });
+
+          html += '</div>';
+          container.innerHTML = html;
+
+          console.log('loadStaffExclusionList: Staff exclusion list rendered with ' + users.length + ' users');
+        })
+        .withFailureHandler(function(e) {
+          console.error('loadStaffExclusionList: Error loading staff list:', e);
+          container.innerHTML = '<p class="font-size-small" style="color: #d32f2f;">Error loading staff list: ' + (e.message || e.toString()) + '</p>';
+        })
+        .getUsersWithRoles();
+    }
+
+    function renderRecommendations(rows) {
+      console.log('renderRecommendations: Processing ' + rows.length + ' recommendation rows');
+      const tableContainer = document.querySelector('#recs');
+      if (!tableContainer) {
+        console.error('renderRecommendations: #recs container not found');
+        return;
+      }
+      
+      // Remove existing table if present
+      const existingTable = tableContainer.querySelector('table');
+      if (existingTable) {
+        existingTable.remove();
+      }
+      
+      if (!rows.length) {
+        const newTable = document.createElement('table');
+        newTable.className = 'compact-table';
+        newTable.innerHTML = `
+          <thead><tr><th colspan="7" class="text-center">No assignment recommendations available</th></tr></thead>
+          <tbody>
+            <tr>
+              <td colspan="7" class="text-center" style="padding: 20px;">
+                <div class="message info">
+                  No recommendations could be generated. This may be because:<br>
+                  • No open shifts are available in the selected date range<br>
+                  • All users are unavailable or marked as unavailable<br>
+                  • No users have the appropriate roles for the available shifts<br>
+                  • All suitable users would violate the 24-hour rest rule<br><br>
+                  Check the Open Shifts table above to see available shifts, and verify user roles and availability in your staff directory.
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        `;
+        tableContainer.appendChild(newTable);
+        return;
+      }
+      
+      // Create table wrapper
+      const tableWrapper = document.createElement('div');
+      tableWrapper.className = 'table-wrapper';
+      
+      // Create table structure
+      const newTable = document.createElement('table');
+      newTable.className = 'compact-table';
+      
+      // Create header row
+      const thead = document.createElement('thead');
+      const headerRow = document.createElement('tr');
+      
+      const headers = ['Select', 'Date', 'Start', 'End', 'Type', 'Recommended', 'Role', 'Rationale'];
+      headers.forEach((headerText, index) => {
+        const th = document.createElement('th');
+        if (index === 0) {
+          // Add "Select All" checkbox in the header - simplified approach
+          const checkbox = document.createElement('input');
+          checkbox.type = 'checkbox';
+          checkbox.id = 'selectAllRecs';
+          checkbox.onchange = toggleAllRecommendations;
+          checkbox.style.margin = '0';
+          th.appendChild(checkbox);
+        } else {
+          th.textContent = headerText;
+        }
+        headerRow.appendChild(th);
+      });
+      
+      thead.appendChild(headerRow);
+      newTable.appendChild(thead);
+      
+      // Create data rows
+      const tbody = document.createElement('tbody');
+      
+      // Sort by start time
+      rows.sort((a, b) => new Date(a.startTime) - new Date(b.startTime));
+      
+      rows.forEach(r => {
+        // Debug: Log the entire recommendation object to see what fields are available
+        console.log('Rendering recommendation - FULL OBJECT:', r);
+        console.log('Rendering recommendation row - shiftId:', r.shiftId, 'slotId:', r.slotId, 'id:', r.id, 'user:', r.assignedUserName);
+
+        const tr = document.createElement('tr');
+        const violations = (r.violations || []).join(', ') || 'None';
+        const violationClass = violations !== 'None' ? 'status-warn' : '';
+        const rationale = r.rationale || 'No rationale provided';
+
+        const startDate = new Date(r.startTime);
+        const endDate = new Date(r.endTime);
+
+        // CRITICAL FIX: Backend returns 'slotId' not 'shiftId' - try all possible field names
+        const shiftId = r.shiftId || r.slotId || r.id || r.shift_id || '';
+        const userId = r.assignedUserId || r.userId || r.user_id || '';
+        const jobId = r.jobId || r.job_id || '';
+
+        console.log('Field resolution - shiftId:', shiftId, 'userId:', userId, 'jobId:', jobId);
+
+        // Store data as attributes FIRST (attributes on parent element are preserved when innerHTML is set)
+        tr.setAttribute('data-shift-id', shiftId);
+        tr.setAttribute('data-user-id', userId);
+        tr.setAttribute('data-job-id', jobId);
+
+        // Set the row content - checkbox MUST be visible and functional
+        tr.innerHTML = `
+          <td style="text-align: center;">
+            <input type="checkbox" class="rec-checkbox" style="margin: 0; opacity: 1; position: static; pointer-events: auto;" />
+          </td>
+          <td>${toAustralianDate(startDate)}</td>
+          <td>${fmtDateLocal(r.startTime)}</td>
+          <td>${fmtDateLocal(r.endTime)}</td>
+          <td>${r.type || 'General'}</td>
+          <td class="font-weight-bold">${r.assignedUserName || 'Unassigned'}</td>
+          <td>${r.role || 'N/A'}</td>
+          <td class="${violationClass} font-size-small" style="white-space: normal; min-width: 450px; max-width: 650px; word-wrap: break-word; line-height: 1.5; padding: 10px 15px;">${rationale}</td>
+        `;
+
+        tbody.appendChild(tr);
+
+        // Debug: Verify the row was added with correct attributes
+        console.log('Row added - data-shift-id:', tr.getAttribute('data-shift-id'), 'data-user-id:', tr.getAttribute('data-user-id'), 'has checkbox:', tr.querySelector('.rec-checkbox') !== null);
+      });
+      
+      newTable.appendChild(tbody);
+      tableWrapper.appendChild(newTable);
+      tableContainer.appendChild(tableWrapper);
+      
+      // Initialize checkboxes after table is rendered
+      initializeCheckboxes();
+      
+      console.log('renderRecommendations complete: ' + tbody.children.length + ' recommendations displayed');
+    }
+
+    function toggleAllRecommendations() {
+      const selectAll = document.getElementById('selectAllRecs');
+      const checkboxes = document.querySelectorAll('.rec-checkbox');
+      checkboxes.forEach(cb => {
+        cb.checked = selectAll.checked;
+      });
+      console.log('toggleAllRecommendations: Set all checkboxes to ' + selectAll.checked);
+    }
+
+    function assignSelectedShifts() {
+      console.log('assignSelectedShifts called');
+
+      // Get all checked checkboxes
+      const checkedBoxes = document.querySelectorAll('.rec-checkbox:checked');
+      console.log('assignSelectedShifts: Found ' + checkedBoxes.length + ' checked checkboxes');
+      
+      // Debug: Also check all rec-checkbox elements regardless of checked state
+      const allRecCheckboxes = document.querySelectorAll('.rec-checkbox');
+      console.log('assignSelectedShifts: Total rec-checkbox elements: ' + allRecCheckboxes.length);
+      
+      // Debug: Check each checkbox individually
+      allRecCheckboxes.forEach((checkbox, index) => {
+        console.log(`assignSelectedShifts: Checkbox ${index}: checked=${checkbox.checked}, className=${checkbox.className}`);
+      });
+
+      if (checkedBoxes.length === 0) {
+        showMessage('⚠ Please select at least one recommendation to assign', 'warning');
+        return;
+      }
+
+      // Build assignments array
+      const assignments = [];
+      checkedBoxes.forEach(checkbox => {
+        const row = checkbox.closest('tr');
+        console.log('assignSelectedShifts: Found row for checkbox:', row);
+        
+        const shiftId = row.getAttribute('data-shift-id');
+        const userId = row.getAttribute('data-user-id');
+        const jobId = row.getAttribute('data-job-id');
+        
+        console.log('assignSelectedShifts: Row data - shiftId:', shiftId, 'userId:', userId, 'jobId:', jobId);
+
+        if (shiftId && userId) {
+          assignments.push({
+            shiftId: shiftId,
+            userId: parseInt(userId),
+            jobId: jobId
+          });
+          console.log('assignSelectedShifts: Added assignment:', assignments[assignments.length - 1]);
+        }
+      });
+
+      console.log('assignSelectedShifts: Collected ' + assignments.length + ' assignments:', assignments);
+
+      if (assignments.length === 0) {
+        showMessage('⚠ No valid assignments found. Please try again.', 'warning');
+        return;
+      }
+
+      // Disable the button and show progress
+      const assignButton = document.querySelector('button[onclick="assignSelectedShifts()"]');
+      const originalButtonText = assignButton ? assignButton.innerHTML : '';
+
+      if (assignButton) {
+        assignButton.disabled = true;
+        assignButton.classList.add('disabled');
+        assignButton.innerHTML = '<i class="material-icons left">hourglass_empty</i>Assigning...';
+      }
+
+      showMessage('Assigning ' + assignments.length + ' shift(s) to staff and publishing...', 'info');
+
+      // Call backend
+      google.script.run
+        .withSuccessHandler(function(result) {
+          console.log('assignSelectedShifts success:', result);
+
+          // Restore button state
+          if (assignButton) {
+            assignButton.disabled = false;
+            assignButton.classList.remove('disabled');
+            assignButton.innerHTML = originalButtonText;
+          }
+
+          const successCount = result.success ? result.success.length : 0;
+          const errorCount = result.errors ? result.errors.length : 0;
+
+          if (errorCount === 0) {
+            showMessage('✅ Successfully assigned and published ' + successCount + ' shift(s)!', 'success');
+            // Uncheck all boxes
+            document.querySelectorAll('.rec-checkbox:checked').forEach(cb => cb.checked = false);
+            document.getElementById('selectAllRecs').checked = false;
+          } else {
+            let msg = '⚠ Completed with ' + successCount + ' success(es) and ' + errorCount + ' error(s).<br><br>';
+            if (result.errors && result.errors.length > 0) {
+              msg += '<strong>Errors:</strong><br>';
+              result.errors.forEach(err => {
+                msg += '• Shift ' + err.shiftId + ': ' + (err.error || 'Unknown error') + '<br>';
+              });
+            }
+            showMessage(msg, 'warning');
+          }
+        })
+        .withFailureHandler(function(e) {
+          console.error('assignSelectedShifts failure:', e);
+
+          // Restore button state
+          if (assignButton) {
+            assignButton.disabled = false;
+            assignButton.classList.remove('disabled');
+            assignButton.innerHTML = originalButtonText;
+          }
+
+          showMessage('❌ Error assigning shifts: ' + (e.message || e.toString()), 'error');
+        })
+        .assignShiftsToUsers(assignments);
+    }
+
+    window.addEventListener('load', function() {
+      console.log('Page loaded, setting up dashboard - manual load enabled');
+      setDefaultRange();
+      loadStaffExclusionList(); // Load staff list for exclusion checkboxes
+      // Add error console display and user guidance
+      if (typeof console !== 'undefined') {
+        console.log('Console logging enabled. Open browser dev tools (F12) to monitor API calls and data flow.');
+        console.log('Auto-load disabled - users can now adjust dates before clicking "Load" to fetch data.');
+      }
+      // Display helpful message instead of auto-loading
+      showMessage('Dashboard initialized with default date range. Review and adjust dates above, then click "Load" to fetch schedule information.', 'success');
+      // No automatic loadDashboard() call - user must manually trigger data loading
+    });
+  </script>
+</head>
+<body>
+  <!-- Progress Bar (initially hidden) -->
+  <div
+    id="spinner"
+    class="progress"
+    style="
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+    "
+  >
+    <div class="indeterminate"></div>
+  </div>
+  
+  <main>
+    <!-- Club Header -->
+    <div class="club-header">
+      <div class="container">
+        <div class="row valign-wrapper">
+          <div class="col s12 m8 l9">
+            <div class="valign-wrapper">
+              <div class="club-logo-text">SMSLC</div>
+              <div>
+                <h1 class="club-title">BK Bar Roster Dashboard</h1>
+                <p class="club-subtitle">
+                  South Maroubra Surf Club - Staff Scheduling System
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="main-container">
+        <div class="form-content">
+          <!-- Parameters Section -->
+          <div class="control-panel">
+            <h5 class="section-header">
+              <i class="material-icons small" style="vertical-align: middle; margin-right: 8px;">date_range</i>
+              Date Range Parameters
+            </h5>
+            <div class="form-row">
+              <div class="input-field">
+                <input id="from" type="date" />
+                <label for="from">From Date</label>
+              </div>
+              <div class="input-field">
+                <input id="to" type="date" />
+                <label for="to">To Date</label>
+              </div>
+              <button class="btn waves-effect waves-light" onclick="loadDashboard()">
+                <i class="material-icons left">refresh</i>Load Dashboard
+              </button>
+              <button class="btn secondary waves-effect waves-light" onclick="jumpToOpenShifts()">
+                <i class="material-icons left">arrow_downward</i>Jump to Open Shifts
+              </button>
+            </div>
+            <div id="msg" class="message info" style="display: none;"></div>
+            <div class="card-panel blue lighten-5">
+              <i class="material-icons left">info</i>
+              <span class="font-size-small">Default range: 45 days back and 45 days forward from today. Adjust dates as needed before loading data.</span>
+            </div>
+          </div>
+
+          <!-- Dashboard Grid -->
+          <div class="dashboard-grid">
+            <!-- Summary Section -->
+            <div class="section">
+              <h5 class="section-header">
+                <i class="material-icons small" style="vertical-align: middle; margin-right: 8px;">assessment</i>
+                Summary by User by Month
+              </h5>
+              <div id="summary">
+                <!-- Pivot table will be dynamically inserted here -->
+              </div>
+              <div id="detailPanel" class="detail-panel" style="display: none;">
+                <div class="detail-panel-header">
+                  <h6 id="detailTitle" style="margin: 0;">Details</h6>
+                  <button class="btn-small waves-effect waves-light" onclick="hideDetails()">
+                    <i class="material-icons">close</i>
+                  </button>
+                </div>
+                <div class="detail-panel-content">
+                  <div id="detailContent"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Staff Exclusions Section -->
+            <div class="section">
+              <h5 class="section-header">
+                <i class="material-icons small" style="vertical-align: middle; margin-right: 8px;">person_off</i>
+                Staff Exclusions (Auto-Rostering)
+              </h5>
+              <div class="card-panel blue lighten-5">
+                <i class="material-icons left">info</i>
+                <span class="font-size-small">Select staff members to exclude from automatic rostering recommendations (e.g., function-only staff, emergency backup only). Excluded staff will not appear in any recommendation suggestions below.</span>
+              </div>
+              <div id="staffExclusionList" style="margin: 1rem 0;">
+                <p class="font-size-small" style="color: #666;">Loading staff list...</p>
+              </div>
+            </div>
+
+            <!-- Open Shifts Section -->
+            <div class="section">
+              <h5 class="section-header">
+                <i class="material-icons small" style="vertical-align: middle; margin-right: 8px;">work_outline</i>
+                Open Shifts
+              </h5>
+              <div class="table-wrapper">
+                <table id="open" class="compact-table">
+                  <thead>
+                    <tr>
+                      <th>Date (HH:MM - HH:MM)</th>
+                      <th>Shift Title</th>
+                      <th>Type</th>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
+              </div>
+              <div id="recs" style="display: none;">
+                <!-- Recommendations table will be dynamically created here -->
+              </div>
+              <div class="form-row margin-top">
+                <button class="btn secondary waves-effect waves-light" onclick="recommend()">
+                  <i class="material-icons left">psychology</i>Recommend (Fairness Priority)
+                </button>
+                <button class="btn waves-effect waves-light" onclick="recommendClaimsPriority()" style="background-color: #0ea5e9 !important;">
+                  <i class="material-icons left">star</i>Recommend (Claims Priority)
+                </button>
+              </div>
+              <div class="form-row margin-top" id="assignButtonContainer" style="display: none;">
+                <button class="btn waves-effect waves-light" onclick="assignSelectedShifts()" style="background-color: #2e7d32 !important;">
+                  <i class="material-icons left">assignment_turned_in</i>Assign Selected Shifts
+                </button>
+                <span class="font-size-small" style="color: #666; margin-left: 1rem; line-height: 36px;">Select checkboxes above to assign and publish shifts</span>
+              </div>
+              <div class="card-panel blue lighten-5 margin-top">
+                <i class="material-icons left">info</i>
+                <span class="font-size-small"><strong>Fairness Priority:</strong> Standard algorithm - shift claims are considered only as a final tie-breaker (priority #7). <strong>Claims Priority:</strong> Enhanced algorithm - shift claims are prioritized earlier (priority #2) to reward staff who claim shifts during the claim window.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Include jQuery and Materialize JS -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  
+  <script>
+    // Initialize Materialize components
+    document.addEventListener('DOMContentLoaded', function() {
+      // Initialize all Materialize components
+      M.AutoInit();
+      
+      // Update text fields to handle any pre-filled values
+      M.updateTextFields();
+      
+      console.log('Materialize components initialized');
+    });
+
+    // Function to re-initialize checkboxes after they're dynamically added
+    function initializeCheckboxes() {
+      // Re-initialize Materialize for dynamically added checkboxes
+      setTimeout(() => {
+        M.AutoInit();
+        console.log('Checkboxes re-initialized after dynamic content load');
+      }, 100);
+    }
+  </script>
+</body>
+</html>
